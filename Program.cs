@@ -18,13 +18,13 @@ namespace console_music_video_player
 		{ 
 			Mono, 
 			Duo, 
-			Full 
+			Full
 		};
 		
 		public static void Main(string[] args)
 		{
 			var mode = ColorMode.Full;
-			byte color = 0;
+			byte color = 1;
 			
 			if (args.Length != 0)
 			{
@@ -72,6 +72,10 @@ namespace console_music_video_player
 							color = (byte)Palette.Color.Red;
 							break;
 							
+						case "dark":
+							color = 0;
+							break;
+							
 						default:
 							color = mode == ColorMode.Mono ? (byte)Palette.Color.Yellow : (byte)Palette.DuoColor.Yellow_Green;
 							break;
@@ -114,7 +118,12 @@ namespace console_music_video_player
 					break;
 					
 				default:
-					draw = file => Painting.DrawImage(new Bitmap(new Bitmap(file), Console.WindowWidth, Console.WindowHeight - 1), 0, 0);
+					
+					if (color == 1)
+						draw = file => Painting.DrawImage(new Bitmap(new Bitmap(file), Console.WindowWidth, Console.WindowHeight - 1), 0, 0);
+					
+					else
+						draw = file => Painting.DrawDarkImage(new Bitmap(new Bitmap(file), Console.WindowWidth, Console.WindowHeight - 1), 0, 0);
 					break;
 			}
 			
